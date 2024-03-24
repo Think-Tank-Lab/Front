@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import IntroScreen1 from "./screens/IntroScreen1"; // asigurați-vă că calea este corectă
+import IntroScreen1 from "./screens/IntroScreen1";
 import IntroScreen2 from "./screens/IntroScreen2";
 import IntroScreen3 from "./screens/IntroScreen3";
 import LoginScreen from "./screens/LoginScreen";
