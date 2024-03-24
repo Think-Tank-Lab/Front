@@ -1,6 +1,10 @@
 # Front
-
 Salutare
+
+# Video
+https://github.com/Think-Tank-Lab/Front/assets/91498815/972a71e9-3fe0-4ed4-8ff8-00ced682b2f7
+
+
 
 ## Aveti nevoie de astea:
 - npm install @react-navigation/stack
