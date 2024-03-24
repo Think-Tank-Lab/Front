@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Button,
+  StyleSheet,
+} from "react-native";
 import NavBar from "../components/NavBar"; // asigurați-vă că calea este corectă
 
 const AddSubscriptionScreen = ({ navigation }) => {
@@ -11,7 +18,12 @@ const AddSubscriptionScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Add subscription</Text>
+      {/* Fixed Header */}
+      <View style={styles.fixedHeader}>
+        <Text style={styles.title}>Add subscription</Text>
+      </View>
+
+      {/* Form Inputs */}
       <TextInput
         style={styles.input}
         onChangeText={setName}
@@ -42,13 +54,24 @@ const AddSubscriptionScreen = ({ navigation }) => {
         value={nextPayment}
         placeholder="Next Payment"
       />
-      <Button
-        title="Save"
-        onPress={() => {
-          /* Implementează funcționalitatea de salvare aici */
-        }}
-      />
-      <Button title="Cancel" onPress={() => navigation.goBack()} />
+
+      {/* Buttons */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ExpenseScreen")}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Save</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ExpenseScreen")}
+          style={[styles.button, styles.buttonOutline]}
+        >
+          <Text style={styles.buttonOutlineText}>Cancel</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* NavBar */}
       <NavBar navigation={navigation} />
     </View>
   );
@@ -57,24 +80,68 @@ const AddSubscriptionScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between", // modificat aici
+    justifyContent: "space-between",
     alignItems: "center",
-    padding: 0,
-    marginTop: 30,
+    marginTop: 35,
+    borderTopWidth: 1,
+    borderColor: "#000",
+    paddingTop: 150,
+  },
+  fixedHeader: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#fff",
+    zIndex: 1,
+    elevation: 5,
+    padding: 10,
+    borderColor: "#000",
+    borderWidth: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 30,
     marginBottom: 20,
   },
   input: {
+    width: "90%",
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginTop: 5,
+  },
+  buttonContainer: {
+    width: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: "#0782F9",
     width: "100%",
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 10,
-    backgroundColor: "#fff",
-    paddingHorizontal: 10,
+    padding: 10,
+    borderRadius: 40,
+    alignItems: "center",
+  },
+  buttonOutline: {
+    backgroundColor: "white",
+    marginTop: 5,
+    borderColor: "#0782F9",
+    borderWidth: 2,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttonOutlineText: {
+    color: "#0782F9",
+    fontWeight: "700",
+    fontSize: 16,
   },
 });
 

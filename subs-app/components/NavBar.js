@@ -1,27 +1,41 @@
-import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, Image, StyleSheet } from "react-native";
 
 const NavBar = ({ navigation }) => {
   return (
     <View style={styles.navBar}>
       <TouchableOpacity onPress={() => navigation.navigate("ExpenseScreen")}>
-        <Text style={styles.navItem}>Home </Text>
+        <Image
+          source={require("../assets/icons/HomeIcon.png")}
+          style={styles.navIcon}
+        />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate("NotificationScreen")}
       >
-        <Text style={styles.navItem}>Notifications </Text>
+        <Image
+          source={require("../assets/icons/NotificationIcon2.png")}
+          style={styles.navIcon}
+        />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate("AddSubscriptionScreen")}
       >
-        <Text style={styles.navItem}>Add Expense </Text>
+        <Image
+          source={require("../assets/icons/AddIcon.png")}
+          style={[styles.navIcon, styles.addIcon]} // Apply additional style for the "Add" button
+        />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("StatsScreen")}>
-        <Text style={styles.navItem}>Stats </Text>
+        <Image
+          source={require("../assets/icons/StatsIcon.png")}
+          style={styles.navIcon}
+        />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
-        <Text style={styles.navItem}>Profile </Text>
+        <Image
+          source={require("../assets/icons/ProfileIcon.png")}
+          style={styles.navIcon}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -31,12 +45,17 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
     justifyContent: "space-around",
-    backgroundColor: "#ADD8E6",
+    backgroundColor: "#e3f9fc",
     padding: 20,
     width: "100%",
   },
-  navItem: {
-    fontSize: 16,
+  navIcon: {
+    width: 25,
+    height: 25,
+  },
+  addIcon: {
+    width: 30, // Adjust the width of the "Add" button
+    height: 30, // Adjust the height of the "Add" button
   },
 });
 

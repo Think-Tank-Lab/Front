@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 
-const SignUpScreen = ({ navigation }) => {
+const EditProfile = ({ navigation }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -52,10 +52,16 @@ const SignUpScreen = ({ navigation }) => {
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("GetStartedScreen")}
+          onPress={() => navigation.navigate("ProfileScreen")}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Save</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ProfileScreen")}
           style={[styles.button, styles.buttonOutline]}
         >
-          <Text style={styles.buttonOutlineText}>Sign Up</Text>
+          <Text style={styles.buttonOutlineText}>Cancel</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -114,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default EditProfile;

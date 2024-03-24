@@ -1,42 +1,38 @@
 import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import NavBar from "../components/NavBar"; // Make sure the path is correct
+import NavBar from "../components/NavBar"; // Asigurați-vă că calea este corectă
 
-const notifications = [
-  { title: "Netflix: 5 days left", timestamp: "1 min ago" },
-  { title: "Spotify: 10 days left", timestamp: "2 hours ago" },
-  { title: "Car Insurance: 30 days left", timestamp: "1 day ago" },
-  // Add more notifications as needed
+const faqData = [
+  {
+    question: "What is Lorem Ipsum?",
+    answer:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+  },
+  {
+    question: "Why do we use it?",
+    answer:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+  },
+  {
+    question: "Where does it come from?",
+    answer:
+      "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.",
+  },
+  // Add more FAQ items as needed
 ];
 
-// Funcție pentru a trunchia numele dacă depășește lungimea dorită
-const truncateName = (name, maxLength) => {
-  if (name.length > maxLength) {
-    return name.substring(0, maxLength) + "...    ";
-  }
-  return name;
-};
-
-const NotificationScreen = ({ navigation }) => {
+const FAQScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.fixedContent}>
-        <Text style={styles.title}>Notifications</Text>
+        <Text style={styles.title}>Frequently Asked Questions</Text>
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.headerSpacer} />
-        {notifications.map((notification, index) => (
-          <View key={index} style={styles.notificationItem}>
-            <View style={styles.notificationColumn}>
-              <Text style={styles.notificationTitle}>
-                {truncateName(notification.title, 30)}
-              </Text>
-            </View>
-            <View style={styles.notificationColumn}>
-              <Text style={styles.notificationTimestamp}>
-                {notification.timestamp}
-              </Text>
-            </View>
+        {faqData.map((item, index) => (
+          <View key={index} style={styles.faqItem}>
+            <Text style={styles.question}>{item.question}</Text>
+            <Text style={styles.answer}>{item.answer}</Text>
           </View>
         ))}
       </ScrollView>
@@ -86,10 +82,7 @@ const styles = StyleSheet.create({
     paddingTop: 80,
     paddingBottom: 100,
   },
-  notificationItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+  faqItem: {
     padding: 20,
     backgroundColor: "#fff",
     borderRadius: 10,
@@ -102,21 +95,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    width: "95%", // Schimbați lățimea aici
-    alignSelf: "center", // Centrarea notificărilor
   },
-
-  notificationColumn: {
-    alignItems: "flex-start",
-  },
-  notificationTitle: {
+  question: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
   },
-  notificationTimestamp: {
+  answer: {
     fontSize: 16,
-    color: "#777",
   },
   bottomNav: {
     position: "absolute",
@@ -126,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationScreen;
+export default FAQScreen;

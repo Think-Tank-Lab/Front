@@ -15,6 +15,13 @@ import AddSubscriptionScreen from "./screens/AddSubscriptionScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import StatsScreen from "./screens/StatsScreen";
 import ChangePasswordScreen from "./screens/ChangePasswordScreen";
+import EditProfileScreen from "./screens/EditProfileScreen";
+import SettingsScreen from "./screens/SettingsScreen";
+import HelpScreen from "./screens/HelpScreen";
+import PrivacyScreen from "./screens/PrivacyScreen";
+import ContactSupportScreen from "./screens/ContactSupportScreen";
+import FAQScreen from "./screens/FAQPage";
+import SendFeedbackScreen from "./screens/SendFeedbackScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -80,6 +87,41 @@ export default function App() {
           options={{ headerShown: false }}
           name="StatsScreen"
           component={StatsScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="EditProfileScreen"
+          component={EditProfileScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="SettingsScreen"
+          component={SettingsScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="HelpScreen"
+          component={HelpScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="PrivacyScreen"
+          component={PrivacyScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="ContactSupportScreen"
+          component={ContactSupportScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="FAQScreen"
+          component={FAQScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="SendFeedbackScreen"
+          component={SendFeedbackScreen}
         />
 
         {/* Adăugați alte ecrane aici */}

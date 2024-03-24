@@ -1,10 +1,24 @@
 import React from "react";
-import { View, Text, Button, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+} from "react-native";
 const IntroScreen1 = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Button title="Skip" onPress={() => navigation.navigate("Intro3")} />
+        <View style={styles.buttonContainerSkip}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Intro3")}
+            style={styles.buttonSkip}
+          >
+            <Text style={styles.buttonText}>Skip</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.content}>
         <Image
@@ -17,7 +31,14 @@ const IntroScreen1 = ({ navigation }) => {
         </Text>
       </View>
       <View style={styles.footer}>
-        <Button title="Next" onPress={() => navigation.navigate("Intro2")} />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Intro2")}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Next</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -58,6 +79,49 @@ const styles = StyleSheet.create({
   },
   footer: {
     width: "100%",
+  },
+  buttonContainerSkip: {
+    width: "20%", // Adjust the width as needed
+    justifyContent: "center",
+    alignItems: "flex-end",
+    marginTop: 20,
+  },
+  buttonSkip: {
+    backgroundColor: "#0782F9",
+    width: "100%", // Adjust the width as needed
+    paddingVertical: 10, // Adjust the padding as needed
+    paddingHorizontal: 20, // Adjust the padding as needed
+    borderRadius: 40,
+    alignItems: "center",
+  },
+  buttonContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 40,
+  },
+  button: {
+    backgroundColor: "#0782F9",
+    width: "100%",
+    padding: 15,
+    borderRadius: 40,
+    alignItems: "center",
+  },
+  buttonOutline: {
+    backgroundColor: "white",
+    marginTop: 5,
+    borderColor: "#0782F9",
+    borderWidth: 2,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
+  },
+  buttonOutlineText: {
+    color: "#0782F9",
+    fontWeight: "700",
+    fontSize: 16,
   },
 });
 
