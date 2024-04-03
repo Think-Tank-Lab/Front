@@ -10,6 +10,7 @@ https://github.com/Think-Tank-Lab/Front/assets/91498815/972a71e9-3fe0-4ed4-8ff8-
 - npm install @react-navigation/stack
 - npx expo install react-native-gesture-handler
 - npm install react-native-gesture-handler
+- npm install firebase
 
 ## Teoretic si astea da inca nu merge graficul:
 - npm install react-native-chart-kit
