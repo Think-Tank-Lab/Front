@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import NavBar from "../components/NavBar"; // Make sure the path is correct
+import NavBar from "../components/NavBar";
 
 const notifications = [
   { title: "Netflix: 5 days left", timestamp: "1 min ago" },

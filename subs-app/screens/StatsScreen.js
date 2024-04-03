@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { LineChart } from "react-native-chart-kit";
-import NavBar from "../components/NavBar"; // Make sure the path is correct
+import NavBar from "../components/NavBar";
 
 const StatsScreen = ({ navigation }) => {
   // Data for the chart. Replace this with your own data.

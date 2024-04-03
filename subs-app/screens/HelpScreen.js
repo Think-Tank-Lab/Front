@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import NavBar from "../components/NavBar"; // Make sure the path is correct
+import NavBar from "../components/NavBar"; 
 
 const HelpScreen = ({ navigation }) => {
   return (
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   secondContent: {
-    marginTop: 150, // Adjust as needed
+    marginTop: 150, // Ajustatic aici daca aveti nevoie
     alignItems: "center",
   },
   title: {

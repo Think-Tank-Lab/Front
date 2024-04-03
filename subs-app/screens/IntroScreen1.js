@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 400, // ajustează dimensiunile conform necesităților tale
-    height: 200, // ajustează dimensiunile conform necesităților tale
+    width: 400,
+    height: 200,
     marginBottom: 20,
   },
   title: {
@@ -81,16 +81,16 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   buttonContainerSkip: {
-    width: "20%", // Adjust the width as needed
+    width: "20%",
     justifyContent: "center",
     alignItems: "flex-end",
     marginTop: 20,
   },
   buttonSkip: {
     backgroundColor: "#0782F9",
-    width: "100%", // Adjust the width as needed
-    paddingVertical: 10, // Adjust the padding as needed
-    paddingHorizontal: 20, // Adjust the padding as needed
+    width: "100%",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 40,
     alignItems: "center",
   },

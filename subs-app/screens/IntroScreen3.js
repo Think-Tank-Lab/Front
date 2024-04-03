@@ -58,11 +58,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 120, // Adjust the margin top as needed
+    marginTop: 120,
   },
   image: {
-    width: 400, // ajustează dimensiunile conform necesităților tale
-    height: 400, // ajustează dimensiunile conform necesităților tale
+    width: 400,
+    height: 400,
     marginBottom: 20,
   },
   title: {

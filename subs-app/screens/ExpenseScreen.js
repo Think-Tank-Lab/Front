@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import NavBar from "../components/NavBar"; // Make sure the path is correct
+import NavBar from "../components/NavBar";
 
 const expenses = [
   { title: "Netflix", cost: 10, daysLeft: 5 },
@@ -13,7 +13,7 @@ const expenses = [
   { title: "Rent", cost: 500, daysLeft: 10 },
   { title: "Groceries", cost: 50, daysLeft: 2 },
   { title: "Car Insurance", cost: 100, daysLeft: 30 },
-  // Add more expenses as needed
+  // Adaugati daca mai vreti
 ];
 
 // Funcție pentru a trunchia numele dacă depășește lungimea dorită
@@ -24,7 +24,7 @@ const truncateName = (name, maxLength) => {
   return name;
 };
 
-// Calculate total expenses for the month
+// Totalul
 const ExpenseScreen = ({ navigation }) => {
   const totalExpenses = expenses.reduce(
     (total, expense) => total + expense.cost,
@@ -90,10 +90,6 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  scrollContainer: {
-    paddingTop: 80,
-    paddingBottom: 100,
-  },
   headerSpacer: {
     height: 70,
   },
@@ -102,6 +98,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 10,
+  },
+  scrollContainer: {
+    paddingTop: 80,
+    paddingBottom: 100,
   },
   expenseItem: {
     flexDirection: "row",

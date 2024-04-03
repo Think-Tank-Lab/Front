@@ -7,7 +7,7 @@ import {
   Button,
   StyleSheet,
 } from "react-native";
-import NavBar from "../components/NavBar"; // asigurați-vă că calea este corectă
+import NavBar from "../components/NavBar"; 
 
 const AddSubscriptionScreen = ({ navigation }) => {
   const [name, setName] = useState("");

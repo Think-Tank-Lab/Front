@@ -7,9 +7,19 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import NavBar from "../components/NavBar"; // asigurați-vă că calea este corectă
+import NavBar from "../components/NavBar";
+import { auth } from "../firebase";
 
 const ProfileScreen = ({ navigation }) => {
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Login");
+      })
+      .catch((error) => alert(error.message));
+  };
+
   return (
     <View style={styles.container}>
       <Image
@@ -39,7 +49,10 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.buttonOutlineText}>Help</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Intro3")}
+          onPress={() => {
+            handleSignOut();
+            navigation.navigate("Intro3");
+          }}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Log Out</Text>

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import NavBar from "../components/NavBar"; // Asigurați-vă că calea este corectă
+import NavBar from "../components/NavBar";
 
 const PrivacyScreen = ({ navigation }) => {
   return (

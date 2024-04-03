@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import NavBar from "../components/NavBar"; // Asigurați-vă că calea este corectă
+import NavBar from "../components/NavBar"; 
 
 const faqData = [
   {
@@ -18,7 +18,7 @@ const faqData = [
     answer:
       "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.",
   },
-  // Add more FAQ items as needed
+  
 ];
 
 const FAQScreen = ({ navigation }) => {

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import NavBar from "../components/NavBar"; // Asigurați-vă că calea este corectă
+import NavBar from "../components/NavBar";
 
 const ContactSupportScreen = ({ navigation }) => {
   const [message, setMessage] = React.useState("");

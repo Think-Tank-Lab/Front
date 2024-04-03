@@ -8,10 +8,21 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import { auth } from "../firebase";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace("GetStartedScreen");
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
   const handleLogin = () => {
     auth
@@ -40,10 +51,7 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("GetStartedScreen")}
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
