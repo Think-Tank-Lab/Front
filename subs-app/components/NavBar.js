@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
     justifyContent: "space-around",
-    backgroundColor: "#e3f9fc",
+    //backgroundColor: "#e3f9fc",
+    backgroundColor: "#FFF100",
     padding: 20,
     width: "100%",
   },

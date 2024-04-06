@@ -5,17 +5,36 @@ import {
   TextInput,
   TouchableOpacity,
   Button,
-  StyleSheet,
+  StyleSheet
 } from "react-native";
 import NavBar from "../components/NavBar"; 
+import { ref, set } from "firebase/database";
+import { Picker } from '@react-native-picker/picker';
+
+import {db} from "../firebase.js";
 
 const AddSubscriptionScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [paymentCycle, setPaymentCycle] = useState("");
-  const [nextPayment, setNextPayment] = useState("");
+  const [paymentDay, setPaymentDay] = useState("");
 
+  function AddSubscription(){
+    set(ref(db, 'subscriptions/' + name), {
+      name: name,
+      category: category,
+      price : parseFloat(price),
+      paymentCycle: paymentCycle,
+      paymentDay: parseInt(paymentDay)
+    }).then(()=>{
+        alert('data updated');
+    }).catch((error)=>{
+      alert(error);
+    });
+
+  };
+  
   return (
     <View style={styles.container}>
       {/* Fixed Header */}
@@ -26,43 +45,57 @@ const AddSubscriptionScreen = ({ navigation }) => {
       {/* Form Inputs */}
       <TextInput
         style={styles.input}
-        onChangeText={setName}
         value={name}
+        onChangeText={(name) => {setName(name)}}
         placeholder="Name"
       />
+      <Picker
+        style={styles.input}
+        selectedValue={category}
+        onValueChange={(itemValue) => setCategory(itemValue)}
+      >
+        <Picker.Item label="Select category" value="" />
+        <Picker.Item label="Movies" value="Movies" />
+        <Picker.Item label="Sports" value="Sports" />
+        <Picker.Item label="Music" value="Music" />
+      </Picker>
       <TextInput
         style={styles.input}
-        onChangeText={setCategory}
-        value={category}
-        placeholder="Category"
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setPrice}
         value={price}
+        onChangeText={(price) => {setPrice(price)}}
         placeholder="Price"
+        keyboardType="numeric"
       />
+      <Picker
+        style={styles.input}
+        selectedValue={paymentCycle}
+        onValueChange={(itemValue) => setPaymentCycle(itemValue)}
+      >
+        <Picker.Item label="Select payment cycle" value="" />
+        <Picker.Item label="Weekly" value="Weekly" />
+        <Picker.Item label="Bi-weekly" value="Bi-weekly" />
+        <Picker.Item label="Monthly" value="Monthly" />
+        <Picker.Item label="Every 3 months" value="Every 3 months" />
+        <Picker.Item label="Every 6 months" value="Every 6 months" />
+        <Picker.Item label="Yearly" value="Yearly" />
+      </Picker>
       <TextInput
         style={styles.input}
-        onChangeText={setPaymentCycle}
-        value={paymentCycle}
-        placeholder="Payment cycle"
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setNextPayment}
-        value={nextPayment}
-        placeholder="Next Payment"
+        value={paymentDay}
+        onChangeText={(paymentDay) => {setPaymentDay(paymentDay)}}
+        placeholder="Payment Day"
+        keyboardType="numeric"
       />
 
       {/* Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("ExpenseScreen")}
+          onPress={AddSubscription}
           style={styles.button}
         >
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
+        
         <TouchableOpacity
           onPress={() => navigation.navigate("ExpenseScreen")}
           style={[styles.button, styles.buttonOutline]}

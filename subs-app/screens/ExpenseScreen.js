@@ -1,35 +1,65 @@
-import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import NavBar from "../components/NavBar";
+import { ref, onValue, set} from "firebase/database";
+import {db} from "../firebase.js";
+import React, { useState, useEffect } from "react";
 
-const expenses = [
-  { title: "Netflix", cost: 10, daysLeft: 5 },
-  { title: "Spotify", cost: 5, daysLeft: 10 },
-  { title: "Gym Membership", cost: 30, daysLeft: 15 },
-  { title: "Internet Subscription", cost: 20, daysLeft: 7 },
-  { title: "Mobile Phone Plan", cost: 25, daysLeft: 3 },
-  { title: "Electricity Bill", cost: 50, daysLeft: 25 },
-  { title: "Water Bill", cost: 15, daysLeft: 20 },
-  { title: "Rent", cost: 500, daysLeft: 10 },
-  { title: "Groceries", cost: 50, daysLeft: 2 },
-  { title: "Car Insurance", cost: 100, daysLeft: 30 },
-  // Adaugati daca mai vreti
-];
-
-// Funcție pentru a trunchia numele dacă depășește lungimea dorită
-const truncateName = (name, maxLength) => {
-  if (name.length > maxLength) {
-    return name.substring(0, maxLength) + "...    ";
-  }
-  return name;
-};
-
-// Totalul
 const ExpenseScreen = ({ navigation }) => {
+  const [expenses, setExpenses] = useState([]);
+
+  useEffect(() => {
+    const subscriptionsRef = ref(db, 'subscriptions');
+    onValue(subscriptionsRef, (snapshot) => {
+      const data = snapshot.val();
+      const subs = [];
+      for (let key in data) {
+        subs.push({ id: key,...data[key] });
+      }
+      setExpenses(subs);
+    });
+  }, []);
+
   const totalExpenses = expenses.reduce(
-    (total, expense) => total + expense.cost,
+    (total, expense) => total + parseFloat(expense.price),
     0
   );
+  const today = new Date();
+  const currentDay = today.getDate();
+
+  const daysLeft = (currentDay, paymentDay, paymentCycle) => {
+  let days;
+  switch (paymentCycle) {
+    case 'Weekly':
+      days = 7 - ((currentDay - paymentDay) % 7);
+      break;
+    case 'Bi-weekly':
+      days = 14 - ((currentDay - paymentDay) % 14);
+      break;
+    case 'Monthly':
+      const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+      if (currentDay < paymentDay) {
+        days = paymentDay - currentDay;
+      } else {
+        days = lastDayOfMonth - currentDay + paymentDay;
+      }
+      break;
+    case 'Every 3 months':
+      const currentMonth = today.getMonth();
+      const monthsUntilNextPayment = (currentMonth + paymentDay - 1) % 3;
+      days = (3 - monthsUntilNextPayment) * 30 - currentDay;
+      break;
+    case 'Every 6 months':
+      days = 180 - currentDay + paymentDay;
+      break;
+    case 'Yearly':
+      days = 365 - currentDay + paymentDay;
+      break;
+    default:
+      days = 30; // Setăm o valoare implicită în cazul în care paymentCycle-ul nu este definit corect
+  }
+  return days;
+};
+  
 
   return (
     <View style={styles.container}>
@@ -43,23 +73,26 @@ const ExpenseScreen = ({ navigation }) => {
           <View key={index} style={styles.expenseItem}>
             <View style={styles.expenseColumn}>
               <Text style={styles.expenseTitle}>
-                {truncateName(expense.title, 13)}
+                {expense.name}
               </Text>
             </View>
             <View style={styles.expenseColumn}>
               <Text style={styles.expenseInfo}>
-                {expense.cost}$ / month {"   "}
+                {expense.price}$ / {expense.paymentCycle}
               </Text>
             </View>
             <View style={styles.expenseColumn}>
-              <Text style={styles.expenseInfo}>
-                {expense.daysLeft} days left
-              </Text>
+            <Text style={styles.expenseInfo}>
+  {daysLeft(currentDay, expense.paymentDay, expense.paymentCycle)} days left
+</Text>
+
             </View>
           </View>
         ))}
       </ScrollView>
-      <NavBar navigation={navigation} />
+      <View style={styles.bottomNav}>
+        <NavBar navigation={navigation} />
+      </View>
     </View>
   );
 };
@@ -131,6 +164,12 @@ const styles = StyleSheet.create({
   },
   expenseInfo: {
     fontSize: 16,
+  },
+  bottomNav: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
 
