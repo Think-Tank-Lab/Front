@@ -107,36 +107,7 @@ const StatsScreen = ({ navigation }) => {
 
   // Render loading indicator while fetching data
   if (loading) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.fixedContent}>
-          <Text style={styles.title}>Subscription Summary</Text>
-        </View>
-        <LineChart
-          data={chartData}
-          width={screenWidth * 0.9}
-          height={260}
-          chartConfig={{
-            backgroundColor: "#ADD8E6",
-            backgroundGradientFrom: "#ADD8E6",
-            backgroundGradientTo: "#ADD8E6",
-            decimalPlaces: 0,
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-          }}
-          style={styles.chart}
-        />
-        <View style={styles.bottomNav}>
-          <NavBar navigation={navigation} />
-        </View>
-      </View>
-    );
-  }
-
-  // Render the rest of the component once data fetching is completed
-  return (
+     return (
     <View style={styles.container}>
       <View style={styles.fixedContent}>
         <Text style={styles.title}>Subscription Summary</Text>
@@ -146,9 +117,9 @@ const StatsScreen = ({ navigation }) => {
         width={screenWidth * 0.9}
         height={260}
         chartConfig={{
-          backgroundColor: "#fff440",
-          backgroundGradientFrom: "#fff660",
-          backgroundGradientTo: "#fff660",
+          backgroundColor: "#ADD8E6", // Schimbăm culoarea de fundal
+          backgroundGradientFrom: "#ADD8E6", // Schimbăm culoarea de început a gradientului
+          backgroundGradientTo: "#ADD8E6", // Schimbăm culoarea de sfârșit a gradientului
           decimalPlaces: 0,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
@@ -157,6 +128,44 @@ const StatsScreen = ({ navigation }) => {
         }}
         style={styles.chart}
       />
+      <View style={styles.bottomNav}>
+        <NavBar navigation={navigation} />
+      </View>
+    </View>
+  );
+  }
+
+  // Render the rest of the component once data fetching is completed
+  return (
+    <View style={styles.container}>
+      <View style={styles.fixedContent}>
+        <Text style={styles.title}>Subscription Summary</Text>
+      </View>
+      <LineChart
+  data={{
+    labels: chartData.labels, // Folosește etichetele existente pentru paymentCycle
+    datasets: [
+      {
+        data: chartData.datasets[0].data, // Folosește datele existente pentru subscriptions
+        strokeWidth: 2,
+      },
+    ],
+  }}
+  width={Dimensions.get("window").width * 0.9} // Mărește lățimea graficului
+  height={Dimensions.get("window").height * 0.5} // Mărește înălțimea graficului
+  chartConfig={{
+    backgroundColor: "#fff440",
+    backgroundGradientFrom: "#fff660",
+    backgroundGradientTo: "#fff660",
+    decimalPlaces: 0,
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    style: {
+      borderRadius: 16,
+    },
+  }}
+  style={styles.chart}
+/>
+
       <View style={styles.bottomNav}>
         <NavBar navigation={navigation} />
       </View>
