@@ -25,9 +25,9 @@ const IntroScreen1 = ({ navigation }) => {
           source={require("../assets/imagini/imagine_2024-03-13_134544554-removebg-preview.png")} // înlocuiește cu calea către imaginea ta
           style={styles.image}
         />
-        <Text style={styles.title}>Ecranul 1</Text>
+        <Text style={styles.title}>Hello there</Text>
         <Text style={styles.text}>
-          Salutare, acesta este ecranul 1 de bun venit.
+          Welcome to SmartSubs
         </Text>
       </View>
       <View style={styles.footer}>

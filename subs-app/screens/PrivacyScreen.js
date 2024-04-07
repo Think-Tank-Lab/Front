@@ -10,17 +10,13 @@ const PrivacyScreen = ({ navigation }) => {
       </View>
       <View style={styles.secondContent}>
         <Text style={styles.privacyText}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac
-          ullamcorper urna. Integer dictum neque at tellus feugiat, nec
-          consectetur neque ultrices. Phasellus ultrices velit at felis
-          efficitur, vel rutrum turpis dictum. Cras id justo risus. Nulla et
-          semper lectus, at vehicula turpis. Vestibulum eu nibh id urna
-          hendrerit vehicula. Nam vulputate, felis ut tristique condimentum,
-          nunc libero tincidunt sem, non posuere lectus sem eget eros. Proin
-          convallis lacus non lectus consequat bibendum. Vestibulum tincidunt
-          nec velit eget tristique. Fusce ullamcorper risus risus, at
-          ullamcorper orci fermentum eget. Duis ut vestibulum mauris. Mauris
-          ultricies ligula nec magna interdum scelerisque.
+        Your privacy is important to us. It is SmartSubs' policy to respect your privacy regarding any information we may collect from you through our app.
+        We only ask for personal information when we truly need it to provide a service to you. We collect it by fair and lawful means, with your knowledge and consent.
+        We only retain collected information for as long as necessary to provide you with your requested service. What data we store, we'll protect within commercially acceptable means to prevent loss and theft, as well as unauthorized access, disclosure, copying, use or modification.
+        We don't share any personally identifying information publicly or with third-parties, except when required to by law.
+        Our app may link to external sites that are not operated by us. Please be aware that we have no control over the content and practices of these sites, and cannot accept responsibility or liability for their respective privacy policies.
+        You are free to refuse our request for your personal information, with the understanding that we may be unable to provide you with some of your desired services.
+        Your continued use of our app will be regarded as acceptance of our practices around privacy and personal information. If you have any questions about how we handle user data and personal information, feel free to contact us.
         </Text>
       </View>
       <View style={styles.bottomNav}>

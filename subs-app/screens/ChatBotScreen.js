@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text, FlatList, TextInput, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
 import NavBar from "../components/NavBar";
-import axios from 'axios'; 
+import axios from "axios"; 
 
 const ChatBotScreen = ({ navigation }) => {
 
   const [data, setData] = useState([]);
   const apiKey = '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';
-  const apiURL = 'https://api.openai.com/v1/engines/text-davinci-002/completions';
+  const apiURL = 'https://api.openai.com/v1/chat/completions';
   const [textInput, setTextInput] = useState('');
-  
   const handleSend = async () => {
     try {
       const prompt = textInput;
@@ -25,7 +24,7 @@ const ChatBotScreen = ({ navigation }) => {
         }
       });
   
-      const text = response.data.choises[0].text;
+      const text = response.data.choices[0].text; // Corectare aici
       setData([...data, {type:'user', 'text': textInput}, {type:'bot', 'text':text}]);
       setTextInput('');
     } catch (error) {
@@ -33,6 +32,7 @@ const ChatBotScreen = ({ navigation }) => {
       alert('Something went wrong. Please try again later.');
     }
   }
+  
   
   
   return (

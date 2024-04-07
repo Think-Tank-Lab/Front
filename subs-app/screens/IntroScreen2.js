@@ -26,9 +26,10 @@ const IntroScreen2 = ({ navigation }) => {
           source={require("../assets/imagini/Captura_de_ecran_2024-03-13_134250-removebg-preview.png")} // înlocuiește cu calea către imaginea ta
           style={styles.image}
         />
-        <Text style={styles.title}>Ecranul 2</Text>
+        <Text style={styles.title}>Struggling with management of your budged?</Text>
         <Text style={styles.text}>
-          Salutare, acesta este ecranul 2 de bun venit.
+          Let us help you.
+          We are SmartSubs and we provide a subscription managing service for you  to track all your expenses in one place.
         </Text>
       </View>
       <View style={styles.footer}>

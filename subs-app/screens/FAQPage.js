@@ -4,19 +4,19 @@ import NavBar from "../components/NavBar";
 
 const faqData = [
   {
-    question: "What is Lorem Ipsum?",
+    question: "Why should  I use SmartSubs?",
     answer:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+      "SmartSubs simplifies the process of managing your subscriptions by providing a centralized platform to track payments, renewal dates, and analyze your subscription expenses. It helps you stay organized and in control of your finances.",
   },
   {
-    question: "Why do we use it?",
+    question: "What is SmartSubs?",
     answer:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+      "SmartSubs is a subscription management application designed to help you effortlessly track and manage all your subscriptions in one place.",
   },
   {
-    question: "Where does it come from?",
+    question: "How can I get support for SmartSubs?",
     answer:
-      "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.",
+      "If you have any questions, feedback, or encounter any issues while using SmartSubs, our support team is here to assist you. You can reach out to us through the app's support section, and we'll be happy to help.",
   },
   
 ];

@@ -16,7 +16,7 @@ const GetStartedScreen = ({ navigation }) => {
         source={require("../assets/imagini/Captura_de_ecran_2024-03-13_134324-removebg-preview.png")} // înlocuiește cu calea către imaginea ta
         style={styles.image}
       />
-      <Text style={styles.title}>Lorem ipsum dolor sit amet, consectetur</Text>
+      <Text style={styles.title}>Thank you for joining us</Text>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity

@@ -11,7 +11,7 @@ import NavBar from "../components/NavBar";
 import { ref, set } from "firebase/database";
 import { Picker } from "@react-native-picker/picker";
 
-import { db } from "../firebase.js";
+import { db, auth } from "../firebase.js";
 
 const AddSubscriptionScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -21,7 +21,14 @@ const AddSubscriptionScreen = ({ navigation }) => {
   const [paymentDay, setPaymentDay] = useState("");
 
   function AddSubscription() {
-    set(ref(db, "subscriptions/" + name), {
+    // Obținem adresa de email a utilizatorului autentificat
+    const userEmail = auth.currentUser.email;
+    // Extragem numele de utilizator din adresa de email (partea dinaintea caracterului "@")
+    const username = userEmail.substring(0, userEmail.indexOf("@"));
+    // Generăm o cheie privată unică pentru abonament
+    const key = generateUniqueKey(); // Funcția generateUniqueKey() va trebui să fie definită
+  
+    set(ref(db, `subscriptions/${username}/${key}`), {
       name: name,
       category: category,
       price: parseFloat(price),
@@ -29,11 +36,18 @@ const AddSubscriptionScreen = ({ navigation }) => {
       paymentDay: parseInt(paymentDay),
     })
       .then(() => {
-        alert("data updated");
+        alert("Data updated");
       })
       .catch((error) => {
         alert(error);
       });
+  }
+  
+  // Funcție pentru generarea unei chei private unice
+  function generateUniqueKey() {
+    // Aici puteți implementa logica pentru generarea unei chei unice, de exemplu, puteți folosi un pachet de generare a ID-urilor unice sau o combinație de timestamp și un șir aleator.
+    // În acest exemplu simplu, vom folosi un timestamp convertit în șir ca cheie unică.
+    return new Date().getTime().toString();
   }
 
   return (
@@ -84,8 +98,8 @@ const AddSubscriptionScreen = ({ navigation }) => {
         <Picker.Item label="Weekly" value="Weekly" />
         <Picker.Item label="Bi-weekly" value="Bi-weekly" />
         <Picker.Item label="Monthly" value="Monthly" />
-        <Picker.Item label="Every 3 months" value="Every 3 months" />
-        <Picker.Item label="Every 6 months" value="Every 6 months" />
+        <Picker.Item label="3 months" value="3 months" />
+        <Picker.Item label="6 months" value="6 months" />
         <Picker.Item label="Yearly" value="Yearly" />
       </Picker>
       <TextInput

@@ -16,9 +16,9 @@ const IntroScreen3 = ({ navigation }) => {
           source={require("../assets/imagini/Captura_de_ecran_2024-03-13_134324-removebg-preview.png")} // înlocuiește cu calea către imaginea ta
           style={styles.image}
         />
-        <Text style={styles.title}>Ecranul 3</Text>
+        <Text style={styles.title}>Stick to your budged</Text>
         <Text style={styles.text}>
-          Salutare, acesta este ecranul 3 de bun venit.
+          We provide data of your subscriptions and help you become a better version of yourself.
         </Text>
       </View>
       <View style={styles.footer}>

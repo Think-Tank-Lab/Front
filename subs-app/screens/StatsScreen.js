@@ -4,10 +4,11 @@ import { LineChart } from "react-native-chart-kit";
 import { Picker } from "@react-native-picker/picker";
 import NavBar from "../components/NavBar";
 import { ref, onValue } from "firebase/database";
-import { db } from "../firebase.js";
+import { db, auth } from "../firebase.js";
+
 const StatsScreen = ({ navigation }) => {
   const [subscriptions, setSubscriptions] = useState([]);
-  const [loading, setLoading] = useState(true); // New loading state
+  const [loading, setLoading] = useState(true);
   const [chartData, setChartData] = useState({
     labels: [
       "Weekly",
@@ -24,27 +25,25 @@ const StatsScreen = ({ navigation }) => {
       },
     ],
   });
-  const screenWidth = Dimensions.get("window").width; // Define screenWidth here
+  const screenWidth = Dimensions.get("window").width;
 
-  // First useEffect to fetch data from Firebase
   useEffect(() => {
-    const subscriptionsRef = ref(db, "subscriptions");
+    const userEmail = auth.currentUser.email;
+    const username = userEmail.substring(0, userEmail.indexOf("@"));
+
+    const subscriptionsRef = ref(db, `subscriptions/${username}`);
     onValue(subscriptionsRef, (snapshot) => {
       const data = snapshot.val();
       const subs = [];
       for (let key in data) {
         subs.push({ id: key, ...data[key] });
       }
-      console.log(subs);
       setSubscriptions(subs);
-      setLoading(false); // Update loading state when data fetching is completed
+      setLoading(false);
     });
   }, []);
 
-  // Second useEffect to update chart data based on subscriptions
   useEffect(() => {
-    console.log("Subscriptions:", subscriptions); // Debugging
-
     const counts = {
       Weekly: 0,
       Biweekly: 0,
@@ -55,24 +54,19 @@ const StatsScreen = ({ navigation }) => {
     };
 
     subscriptions.forEach((subscription) => {
-      let paymentCycle = subscription.paymentCycle.toLowerCase(); // Normalize to lowercase
+      let paymentCycle = subscription.paymentCycle.toLowerCase();
 
-      // Normalize "bi-weekly" to "biweekly"
       if (paymentCycle === "bi-weekly") {
         paymentCycle = "biweekly";
       }
 
-      // Normalize "3 months" to "quarterly"
       if (paymentCycle === "3 months") {
         paymentCycle = "quarterly";
       }
 
-      // Normalize "6 months" to "semiannually"
       if (paymentCycle === "6 months") {
         paymentCycle = "semiannually";
       }
-
-      console.log("Payment cycle:", paymentCycle); // Debugging
 
       switch (paymentCycle) {
         case "weekly":
@@ -98,28 +92,61 @@ const StatsScreen = ({ navigation }) => {
       }
     });
 
-    console.log("Counts:", counts); // Debugging
-
     const newData = { ...chartData };
     newData.datasets[0].data = Object.values(counts);
     setChartData(newData);
   }, [subscriptions]);
 
-  // Render loading indicator while fetching data
   if (loading) {
-     return (
+    return (
+      <View style={styles.container}>
+        <View style={styles.fixedContent}>
+          <Text style={styles.title}>Subscription Summary</Text>
+        </View>
+        <LineChart
+          data={chartData}
+          width={screenWidth * 0.9}
+          height={260}
+          chartConfig={{
+            backgroundColor: "#ADD8E6",
+            backgroundGradientFrom: "#ADD8E6",
+            backgroundGradientTo: "#ADD8E6",
+            decimalPlaces: 0,
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            style: {
+              borderRadius: 16,
+            },
+          }}
+          style={styles.chart}
+        />
+        <View style={styles.bottomNav}>
+          <NavBar navigation={navigation} />
+        </View>
+      </View>
+    );
+  }
+
+  return (
     <View style={styles.container}>
       <View style={styles.fixedContent}>
         <Text style={styles.title}>Subscription Summary</Text>
       </View>
       <LineChart
-        data={chartData}
-        width={screenWidth * 0.9}
-        height={260}
+        data={{
+          labels: chartData.labels,
+          datasets: [
+            {
+              data: chartData.datasets[0].data,
+              strokeWidth: 2,
+            },
+          ],
+        }}
+        width={Dimensions.get("window").width * 0.9}
+        height={Dimensions.get("window").height * 0.5}
         chartConfig={{
-          backgroundColor: "#ADD8E6", // Schimbăm culoarea de fundal
-          backgroundGradientFrom: "#ADD8E6", // Schimbăm culoarea de început a gradientului
-          backgroundGradientTo: "#ADD8E6", // Schimbăm culoarea de sfârșit a gradientului
+          backgroundColor: "#fff440",
+          backgroundGradientFrom: "#fff660",
+          backgroundGradientTo: "#fff660",
           decimalPlaces: 0,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
@@ -128,43 +155,6 @@ const StatsScreen = ({ navigation }) => {
         }}
         style={styles.chart}
       />
-      <View style={styles.bottomNav}>
-        <NavBar navigation={navigation} />
-      </View>
-    </View>
-  );
-  }
-
-  // Render the rest of the component once data fetching is completed
-  return (
-    <View style={styles.container}>
-      <View style={styles.fixedContent}>
-        <Text style={styles.title}>Subscription Summary</Text>
-      </View>
-      <LineChart
-  data={{
-    labels: chartData.labels, // Folosește etichetele existente pentru paymentCycle
-    datasets: [
-      {
-        data: chartData.datasets[0].data, // Folosește datele existente pentru subscriptions
-        strokeWidth: 2,
-      },
-    ],
-  }}
-  width={Dimensions.get("window").width * 0.9} // Mărește lățimea graficului
-  height={Dimensions.get("window").height * 0.5} // Mărește înălțimea graficului
-  chartConfig={{
-    backgroundColor: "#fff440",
-    backgroundGradientFrom: "#fff660",
-    backgroundGradientTo: "#fff660",
-    decimalPlaces: 0,
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    style: {
-      borderRadius: 16,
-    },
-  }}
-  style={styles.chart}
-/>
 
       <View style={styles.bottomNav}>
         <NavBar navigation={navigation} />

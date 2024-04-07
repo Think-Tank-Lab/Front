@@ -8,7 +8,7 @@ import {
   Modal,
 } from "react-native";
 import { ref, onValue, set, remove } from "firebase/database";
-import { db } from "../firebase.js";
+import { db, auth } from "../firebase.js";
 import NavBar from "../components/NavBar";
 
 const ExpenseScreen = ({ navigation }) => {
@@ -17,7 +17,12 @@ const ExpenseScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    const subscriptionsRef = ref(db, "subscriptions");
+    // Obținem adresa de email a utilizatorului autentificat
+    const userEmail = auth.currentUser.email;
+    // Extragem numele de utilizator din adresa de email (partea dinaintea caracterului "@")
+    const username = userEmail.substring(0, userEmail.indexOf("@"));
+
+    const subscriptionsRef = ref(db, `subscriptions/${username}`);
     onValue(subscriptionsRef, (snapshot) => {
       const data = snapshot.val();
       const subs = [];
@@ -95,7 +100,12 @@ const ExpenseScreen = ({ navigation }) => {
   };
 
   const handleDelete = () => {
-    const expenseRef = ref(db, `subscriptions/${selectedExpense.id}`);
+    // Obținem adresa de email a utilizatorului autentificat
+    const userEmail = auth.currentUser.email;
+    // Extragem numele de utilizator din adresa de email (partea dinaintea caracterului "@")
+    const username = userEmail.substring(0, userEmail.indexOf("@"));
+  
+    const expenseRef = ref(db, `subscriptions/${username}/${selectedExpense.id}`);
     remove(expenseRef)
       .then(() => {
         console.log("Subscription deleted successfully");
@@ -105,6 +115,7 @@ const ExpenseScreen = ({ navigation }) => {
         console.error("Error deleting subscription: ", error);
       });
   };
+  
 
   const truncateName = (name, maxLength) => {
     if (name.length > maxLength) {
