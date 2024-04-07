@@ -4,14 +4,39 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Button,
+  Alert,
   StyleSheet,
 } from "react-native";
+import { auth } from "../firebase"; // Assuming you have Firebase auth set up
 
 const ChangePasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleChangePassword = async () => {
+    try {
+      // Check if passwords match
+      if (newPassword !== confirmPassword) {
+        Alert.alert("Error", "Passwords do not match");
+        return;
+      }
+
+      // Change password using Firebase
+      await auth.sendPasswordResetEmail(email);
+
+      Alert.alert(
+        "Success",
+        "Password change email sent. Please check your inbox."
+      );
+
+      // Navigate to another screen after successful password change
+      // navigation.navigate("IntroScreen3");
+    } catch (error) {
+      console.error("Error changing password: ", error.message);
+      Alert.alert("Error", "Failed to change password. Please try again.");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -21,6 +46,7 @@ const ChangePasswordScreen = ({ navigation }) => {
         onChangeText={setEmail}
         value={email}
         placeholder="Email"
+        keyboardType="email-address"
       />
       <TextInput
         style={styles.input}
@@ -38,11 +64,7 @@ const ChangePasswordScreen = ({ navigation }) => {
       />
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("IntroScreen3")}
-          /* Implementează funcționalitatea de schimbare a parolei aici */
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={handleChangePassword} style={styles.button}>
           <Text style={styles.buttonText}>Change password</Text>
         </TouchableOpacity>
       </View>
@@ -53,7 +75,6 @@ const ChangePasswordScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "space-between", // modificat aici
     alignItems: "center",
     padding: 10,
     marginTop: 180,
@@ -72,10 +93,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 25,
   },
-  forgotPassword: {
-    marginTop: 15,
-    color: "#000",
-  },
   buttonContainer: {
     width: "50%",
     justifyContent: "center",
@@ -90,18 +107,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     alignItems: "center",
   },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#FFF100",
-    borderWidth: 2,
-  },
   buttonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonOutlineText: {
     color: "black",
     fontWeight: "700",
     fontSize: 16,

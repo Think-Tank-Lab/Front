@@ -51,34 +51,30 @@ const ProfileScreen = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => navigation.navigate("ChangePasswordScreen")}
-          style={[
-            styles.button,
-            styles.buttonOutline,
-            { width: screenWidth * 0.5 },
-          ]} // Set button width to 50% of screen width
+          style={styles.button} // Set button style for all buttons
         >
-          <Text style={styles.buttonOutlineText}>Change Password</Text>
+          <Text style={styles.buttonText}>Change Password</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, styles.buttonOutline]}
+          style={styles.button}
           onPress={() => navigation.navigate("PrivacyScreen")}
         >
-          <Text style={styles.buttonOutlineText}>Privacy</Text>
+          <Text style={styles.buttonText}>Privacy</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("HelpScreen")}
-          style={[styles.button, styles.buttonOutline]}
+          style={styles.button}
         >
-          <Text style={styles.buttonOutlineText}>Help</Text>
+          <Text style={styles.buttonText}>Help</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             handleSignOut();
             navigation.navigate("Intro3");
           }}
-          style={[styles.button, styles.buttonOutline]}
+          style={styles.button}
         >
-          <Text style={styles.buttonOutlineText}>Log Out</Text>
+          <Text style={styles.buttonText}>Log Out</Text>
         </TouchableOpacity>
       </View>
       <NavBar navigation={navigation} />
@@ -119,19 +115,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50, // Adjusted padding to increase button width
     borderRadius: 40,
     alignItems: "center",
-    marginBottom: 40, // Adjusted marginBottom for spacing between buttons
-  },
-  buttonOutline: {
-    backgroundColor: "white",
-    borderColor: "#FFF100",
-    borderWidth: 2,
+    marginBottom: 20, // Adjusted marginBottom for spacing between buttons
+    width: Dimensions.get("window").width * 0.7, // Set button width to 70% of screen width
   },
   buttonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonOutlineText: {
     color: "black",
     fontWeight: "700",
     fontSize: 16,

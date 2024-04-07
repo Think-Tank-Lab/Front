@@ -7,15 +7,37 @@ import {
   StyleSheet,
 } from "react-native";
 import NavBar from "../components/NavBar";
+import { ref, set } from "firebase/database";
+import { db, auth } from "../firebase.js";
 
 const SendFeedbackScreen = ({ navigation }) => {
   const [feedback, setFeedback] = React.useState("");
 
-  const handleSendFeedback = () => {
-    // Logic to send feedback
-    console.log("Feedback sent:", feedback);
-    // Clear input field after sending feedback
-    setFeedback("");
+  const sendFeedback = () => {
+    // Get the current user's email
+    const userEmail = auth.currentUser.email;
+    // Extract the username from the email
+    const username = userEmail.substring(0, userEmail.indexOf("@"));
+    // Generate a unique feedback ID
+    const feedbackId = generateUniqueKey();
+    // Save the feedback to the database
+    set(ref(db, `feedback/${username}/${feedbackId}`), {
+      feedback: feedback,
+      email: userEmail,
+    })
+      .then(() => {
+        console.log("Feedback sent successfully!");
+        // Clear the input field after sending the feedback
+        setFeedback("");
+      })
+      .catch((error) => {
+        console.error("Error sending feedback:", error);
+      });
+  };
+
+  // Function to generate a unique feedback ID
+  const generateUniqueKey = () => {
+    return new Date().getTime().toString();
   };
 
   return (
@@ -31,7 +53,7 @@ const SendFeedbackScreen = ({ navigation }) => {
           value={feedback}
           onChangeText={(text) => setFeedback(text)}
         />
-        <TouchableOpacity style={styles.button} onPress={handleSendFeedback}>
+        <TouchableOpacity style={styles.button} onPress={sendFeedback}>
           <Text style={styles.buttonText}>Send</Text>
         </TouchableOpacity>
       </View>

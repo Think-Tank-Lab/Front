@@ -27,7 +27,7 @@ const AddSubscriptionScreen = ({ navigation }) => {
     const username = userEmail.substring(0, userEmail.indexOf("@"));
     // Generăm o cheie privată unică pentru abonament
     const key = generateUniqueKey(); // Funcția generateUniqueKey() va trebui să fie definită
-  
+
     set(ref(db, `subscriptions/${username}/${key}`), {
       name: name,
       category: category,
@@ -42,7 +42,7 @@ const AddSubscriptionScreen = ({ navigation }) => {
         alert(error);
       });
   }
-  
+
   // Funcție pentru generarea unei chei private unice
   function generateUniqueKey() {
     // Aici puteți implementa logica pentru generarea unei chei unice, de exemplu, puteți folosi un pachet de generare a ID-urilor unice sau o combinație de timestamp și un șir aleator.
@@ -74,6 +74,8 @@ const AddSubscriptionScreen = ({ navigation }) => {
         <Picker.Item label="Select category" value="" />
         <Picker.Item label="App&Games" value="App&Games" />
         <Picker.Item label="Art" value="Art" />
+        <Picker.Item label="Car" value="Car" />
+        <Picker.Item label="Food" value="Food" />
         <Picker.Item label="Movies" value="Movies" />
         <Picker.Item label="Music" value="Music" />
         <Picker.Item label="News" value="News" />

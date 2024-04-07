@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,15 +7,37 @@ import {
   StyleSheet,
 } from "react-native";
 import NavBar from "../components/NavBar";
+import { ref, set } from "firebase/database";
+import { db, auth } from "../firebase.js";
 
 const ContactSupportScreen = ({ navigation }) => {
-  const [message, setMessage] = React.useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSendMessage = () => {
-    // Logic to send message to support
-    console.log("Message sent:", message);
-    // Clear input field after sending message
-    setMessage("");
+  const sendMessage = () => {
+    // Get the current user's email
+    const userEmail = auth.currentUser.email;
+    // Extract the username from the email
+    const username = userEmail.substring(0, userEmail.indexOf("@"));
+    // Generate a unique message ID
+    const messageId = generateUniqueKey();
+    // Save the message to the database
+    set(ref(db, `supportMessages/${username}/${messageId}`), {
+      message: message,
+      email: userEmail,
+    })
+      .then(() => {
+        console.log("Message sent successfully!");
+        // Clear the input field after sending the message
+        setMessage("");
+      })
+      .catch((error) => {
+        console.error("Error sending message:", error);
+      });
+  };
+
+  // Function to generate a unique message ID
+  const generateUniqueKey = () => {
+    return new Date().getTime().toString();
   };
 
   return (
@@ -31,7 +53,7 @@ const ContactSupportScreen = ({ navigation }) => {
           value={message}
           onChangeText={(text) => setMessage(text)}
         />
-        <TouchableOpacity style={styles.button} onPress={handleSendMessage}>
+        <TouchableOpacity style={styles.button} onPress={sendMessage}>
           <Text style={styles.buttonText}>Send</Text>
         </TouchableOpacity>
       </View>

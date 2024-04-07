@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
+  Dimensions, // Import Dimensions from react-native
 } from "react-native";
 import { ref, onValue, set, remove } from "firebase/database";
 import { db, auth } from "../firebase.js";
@@ -104,8 +105,11 @@ const ExpenseScreen = ({ navigation }) => {
     const userEmail = auth.currentUser.email;
     // Extragem numele de utilizator din adresa de email (partea dinaintea caracterului "@")
     const username = userEmail.substring(0, userEmail.indexOf("@"));
-  
-    const expenseRef = ref(db, `subscriptions/${username}/${selectedExpense.id}`);
+
+    const expenseRef = ref(
+      db,
+      `subscriptions/${username}/${selectedExpense.id}`
+    );
     remove(expenseRef)
       .then(() => {
         console.log("Subscription deleted successfully");
@@ -115,7 +119,6 @@ const ExpenseScreen = ({ navigation }) => {
         console.error("Error deleting subscription: ", error);
       });
   };
-  
 
   const truncateName = (name, maxLength) => {
     if (name.length > maxLength) {
@@ -143,7 +146,7 @@ const ExpenseScreen = ({ navigation }) => {
 
               <View style={styles.expenseColumn}>
                 <Text style={styles.expenseInfo}>
-                  {expense.price}$ / {expense.paymentCycle}
+                  {expense.price}$/{expense.paymentCycle}
                 </Text>
               </View>
               <View style={styles.expenseColumn}>
@@ -179,6 +182,8 @@ const ExpenseScreen = ({ navigation }) => {
     </View>
   );
 };
+
+const { width } = Dimensions.get("window"); // Get the window width
 
 const styles = StyleSheet.create({
   container: {
@@ -227,6 +232,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     marginBottom: 20,
+    width: width * 0.9, // Set the width to 90% of the screen width
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
