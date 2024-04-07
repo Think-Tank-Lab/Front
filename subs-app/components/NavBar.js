@@ -10,7 +10,7 @@ const NavBar = ({ navigation }) => {
         />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("NotificationScreen")}
+        onPress={() => navigation.navigate("ChatBotScreen")}
       >
         <Image
           source={require("../assets/icons/NotificationIcon2.png")}
@@ -25,7 +25,8 @@ const NavBar = ({ navigation }) => {
           style={[styles.navIcon, styles.addIcon]} // Apply additional style for the "Add" button
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("StatsScreen")}>
+      <TouchableOpacity 
+      onPress={() => navigation.navigate("StatsScreen")}>
         <Image
           source={require("../assets/icons/StatsIcon.png")}
           style={styles.navIcon}

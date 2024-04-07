@@ -11,6 +11,7 @@ import SignUpScreen from "./screens/SignUpScreen";
 import GetStartedScreen from "./screens/GetStartedScreen";
 import ExpenseScreen from "./screens/ExpenseScreen";
 import NotificationScreen from "./screens/NotificationScreen";
+import ChatBotScreen from "./screens/ChatBotScreen";
 import AddSubscriptionScreen from "./screens/AddSubscriptionScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import StatsScreen from "./screens/StatsScreen";
@@ -70,8 +71,8 @@ export default function App() {
         />
         <Stack.Screen
           options={{ headerShown: false }}
-          name="NotificationScreen"
-          component={NotificationScreen}
+          name="ChatBotScreen"
+          component={ChatBotScreen}
         />
         <Stack.Screen
           options={{ headerShown: false }}
