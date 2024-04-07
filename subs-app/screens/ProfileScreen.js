@@ -42,7 +42,7 @@ const ProfileScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Image
         style={styles.profileImage}
-        source={require("../assets/imagini/imagine_2024-03-13_134544554-removebg-preview.png")} // înlocuiește cu calea către imaginea de profil
+        source={require("../assets/imagini/Image_Editor.png")} // înlocuiește cu calea către imaginea de profil
       />
       <View>
         <Text style={styles.email}>{emailPrefix}</Text>

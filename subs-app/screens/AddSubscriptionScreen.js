@@ -58,9 +58,13 @@ const AddSubscriptionScreen = ({ navigation }) => {
         onValueChange={(itemValue) => setCategory(itemValue)}
       >
         <Picker.Item label="Select category" value="" />
+        <Picker.Item label="App&Games" value="App&Games" />
+        <Picker.Item label="Art" value="Art" />
         <Picker.Item label="Movies" value="Movies" />
-        <Picker.Item label="Sports" value="Sports" />
         <Picker.Item label="Music" value="Music" />
+        <Picker.Item label="News" value="News" />
+        <Picker.Item label="Sports" value="Sports" />
+        <Picker.Item label="Other" value="Other" />
       </Picker>
       <TextInput
         style={styles.input}

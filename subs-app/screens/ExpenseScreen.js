@@ -116,8 +116,8 @@ const ExpenseScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.fixedContent}>
-        <Text style={styles.title}>Total Expenses </Text>
-        <Text style={styles.title}> - ${totalExpenses} this month - </Text>
+        <Text style={styles.title}>Total Subscriptions </Text>
+        <Text style={styles.title}> - ${totalExpenses} to pay - </Text>
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.headerSpacer} />
