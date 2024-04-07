@@ -36,7 +36,8 @@ const AddSubscriptionScreen = ({ navigation }) => {
       paymentDay: parseInt(paymentDay),
     })
       .then(() => {
-        alert("Data updated");
+        alert("Subscription added");
+        navigation.navigate("ExpenseScreen");
       })
       .catch((error) => {
         alert(error);
