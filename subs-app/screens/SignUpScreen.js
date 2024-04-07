@@ -10,8 +10,6 @@ import {
 import { auth } from "../firebase";
 
 const SignUpScreen = ({ navigation }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -39,18 +37,6 @@ const SignUpScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Be a part of us</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setFirstName}
-        value={firstName}
-        placeholder="First Name"
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setLastName}
-        value={lastName}
-        placeholder="Last Name"
-      />
       <TextInput
         style={styles.input}
         onChangeText={setEmail}

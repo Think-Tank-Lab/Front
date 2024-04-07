@@ -13,7 +13,7 @@ const GetStartedScreen = ({ navigation }) => {
     <View style={styles.container}>
       {/* Aici ar trebui să adăugați ilustrația */}
       <Image
-        source={require("../assets/imagini/Captura_de_ecran_2024-03-13_134324-removebg-preview.png")} // înlocuiește cu calea către imaginea ta
+        source={require("../assets/imagini/image.png")} // înlocuiește cu calea către imaginea ta
         style={styles.image}
       />
       <Text style={styles.title}>Thank you for joining us</Text>
@@ -72,6 +72,10 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "700",
     fontSize: 16,
+  }, image: {
+    width: 400,
+    height: 400,
+    marginBottom: 20,
   },
 });
 

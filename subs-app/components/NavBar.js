@@ -5,7 +5,7 @@ const NavBar = ({ navigation }) => {
     <View style={styles.navBar}>
       <TouchableOpacity onPress={() => navigation.navigate("ExpenseScreen")}>
         <Image
-          source={require("../assets/icons/HomeIcon.png")}
+          source={require("../assets/icons/home.png")}
           style={styles.navIcon}
         />
       </TouchableOpacity>
@@ -13,7 +13,7 @@ const NavBar = ({ navigation }) => {
         onPress={() => navigation.navigate("ChatBotScreen")}
       >
         <Image
-          source={require("../assets/icons/NotificationIcon2.png")}
+          source={require("../assets/icons/chatbot.png")}
           style={styles.navIcon}
         />
       </TouchableOpacity>
@@ -28,13 +28,13 @@ const NavBar = ({ navigation }) => {
       <TouchableOpacity 
       onPress={() => navigation.navigate("StatsScreen")}>
         <Image
-          source={require("../assets/icons/StatsIcon.png")}
+          source={require("../assets/icons/chart.png")}
           style={styles.navIcon}
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
         <Image
-          source={require("../assets/icons/ProfileIcon.png")}
+          source={require("../assets/icons/user.png")}
           style={styles.navIcon}
         />
       </TouchableOpacity>
