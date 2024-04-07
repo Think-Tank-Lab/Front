@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   webview: {
     flex: 1,
     marginBottom: 60,
+    marginTop:45,
   },
   webviewWithKeyboard: {
     marginBottom: 0,
