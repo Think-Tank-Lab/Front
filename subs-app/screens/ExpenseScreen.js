@@ -165,9 +165,25 @@ const ExpenseScreen = ({ navigation }) => {
       </ScrollView>
       <Modal visible={modalVisible} animationType="slide">
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>
-            {selectedExpense && selectedExpense.name}
-          </Text>
+          {selectedExpense && selectedExpense.name ? (
+            <>
+              <Text style={styles.modalTitle}>
+                Name: {selectedExpense.name}
+              </Text>
+              <Text style={styles.modalTitle}>
+                Category: {selectedExpense.category}
+              </Text>
+              <Text style={styles.modalTitle}>
+                Price: {selectedExpense.price}
+              </Text>
+              <Text style={styles.modalTitle}>
+                Payment Cycle: {selectedExpense.paymentCycle}
+              </Text>
+              <Text style={styles.modalTitle}>
+                Payment Day: {selectedExpense.paymentDay}
+              </Text>
+            </>
+          ) : null}
           <TouchableOpacity style={styles.modalButton} onPress={handleDelete}>
             <Text style={styles.buttonText}>Delete</Text>
           </TouchableOpacity>
@@ -176,6 +192,7 @@ const ExpenseScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
+
       <View style={styles.bottomNav}>
         <NavBar navigation={navigation} />
       </View>
