@@ -89,14 +89,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#fff100",
     width: "50%",
     paddingVertical: 15,
     borderRadius: 40,
     alignItems: "center",
   },
   buttonText: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
     fontSize: 16,
   },

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonSkip: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#FFF100",
     width: "100%",
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#FFF100",
     width: "100%",
     padding: 15,
     borderRadius: 40,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   buttonText: {
-    color: "white",
+    color: "black",
     fontWeight: "700",
     fontSize: 16,
   },

@@ -5,13 +5,13 @@ import {
   TextInput,
   TouchableOpacity,
   Button,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
-import NavBar from "../components/NavBar"; 
+import NavBar from "../components/NavBar";
 import { ref, set } from "firebase/database";
-import { Picker } from '@react-native-picker/picker';
+import { Picker } from "@react-native-picker/picker";
 
-import {db} from "../firebase.js";
+import { db } from "../firebase.js";
 
 const AddSubscriptionScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -20,21 +20,22 @@ const AddSubscriptionScreen = ({ navigation }) => {
   const [paymentCycle, setPaymentCycle] = useState("");
   const [paymentDay, setPaymentDay] = useState("");
 
-  function AddSubscription(){
-    set(ref(db, 'subscriptions/' + name), {
+  function AddSubscription() {
+    set(ref(db, "subscriptions/" + name), {
       name: name,
       category: category,
-      price : parseFloat(price),
+      price: parseFloat(price),
       paymentCycle: paymentCycle,
-      paymentDay: parseInt(paymentDay)
-    }).then(()=>{
-        alert('data updated');
-    }).catch((error)=>{
-      alert(error);
-    });
+      paymentDay: parseInt(paymentDay),
+    })
+      .then(() => {
+        alert("data updated");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
 
-  };
-  
   return (
     <View style={styles.container}>
       {/* Fixed Header */}
@@ -46,7 +47,9 @@ const AddSubscriptionScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         value={name}
-        onChangeText={(name) => {setName(name)}}
+        onChangeText={(name) => {
+          setName(name);
+        }}
         placeholder="Name"
       />
       <Picker
@@ -62,7 +65,9 @@ const AddSubscriptionScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         value={price}
-        onChangeText={(price) => {setPrice(price)}}
+        onChangeText={(price) => {
+          setPrice(price);
+        }}
         placeholder="Price"
         keyboardType="numeric"
       />
@@ -82,20 +87,19 @@ const AddSubscriptionScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         value={paymentDay}
-        onChangeText={(paymentDay) => {setPaymentDay(paymentDay)}}
+        onChangeText={(paymentDay) => {
+          setPaymentDay(paymentDay);
+        }}
         placeholder="Payment Day"
         keyboardType="numeric"
       />
 
       {/* Buttons */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={AddSubscription}
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={AddSubscription} style={styles.button}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           onPress={() => navigation.navigate("ExpenseScreen")}
           style={[styles.button, styles.buttonOutline]}
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#FFF100",
     width: "100%",
     padding: 10,
     borderRadius: 40,
@@ -163,20 +167,19 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: "white",
     marginTop: 5,
-    borderColor: "#0782F9",
+    borderColor: "#FFF100",
     borderWidth: 2,
   },
   buttonText: {
-    color: "white",
+    color: "black",
     fontWeight: "700",
     fontSize: 16,
   },
   buttonOutlineText: {
-    color: "#0782F9",
+    color: "black",
     fontWeight: "700",
     fontSize: 16,
   },
-  
 });
 
 export default AddSubscriptionScreen;

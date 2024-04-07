@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,11 +6,27 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet,
+  Dimensions, // Import Dimensions from react-native
 } from "react-native";
 import NavBar from "../components/NavBar";
 import { auth } from "../firebase";
 
 const ProfileScreen = ({ navigation }) => {
+  const [userEmail, setUserEmail] = useState(""); // State to store user email
+  const [emailPrefix, setEmailPrefix] = useState(""); // State to store email prefix
+
+  useEffect(() => {
+    // Fetch user data on component mount
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setUserEmail(currentUser.email); // Set user email in state
+
+      // Extract email prefix before "@" symbol
+      const prefix = currentUser.email.split("@")[0];
+      setEmailPrefix(prefix);
+    }
+  }, []);
+
   const handleSignOut = () => {
     auth
       .signOut()
@@ -20,6 +36,8 @@ const ProfileScreen = ({ navigation }) => {
       .catch((error) => alert(error.message));
   };
 
+  const screenWidth = Dimensions.get("window").width; // Get the screen width
+
   return (
     <View style={styles.container}>
       <Image
@@ -27,20 +45,25 @@ const ProfileScreen = ({ navigation }) => {
         source={require("../assets/imagini/imagine_2024-03-13_134544554-removebg-preview.png")} // înlocuiește cu calea către imaginea de profil
       />
       <View>
-        <Text style={styles.username}>Username</Text>
+        <Text style={styles.email}>{emailPrefix}</Text>
       </View>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("EditProfileScreen")}
-          style={[styles.button, styles.buttonOutline]}
+          onPress={() => navigation.navigate("ChangePasswordScreen")}
+          style={[
+            styles.button,
+            styles.buttonOutline,
+            { width: screenWidth * 0.5 },
+          ]} // Set button width to 50% of screen width
         >
-          <Text style={styles.buttonOutlineText}>Edit Profile</Text>
+          <Text style={styles.buttonOutlineText}>Change Password</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("SettingsScreen")}
           style={[styles.button, styles.buttonOutline]}
+          onPress={() => navigation.navigate("PrivacyScreen")}
         >
-          <Text style={styles.buttonOutlineText}>Settings</Text>
+          <Text style={styles.buttonOutlineText}>Privacy</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("HelpScreen")}
@@ -80,12 +103,7 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     borderWidth: 2,
   },
-  name: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  username: {
+  email: {
     fontSize: 40,
     fontWeight: "bold",
     marginBottom: 0,
@@ -96,8 +114,7 @@ const styles = StyleSheet.create({
     marginTop: 20, // Adjusted marginTop for spacing between image and buttons
   },
   button: {
-    backgroundColor: "#0782F9",
-    width: "50%",
+    backgroundColor: "#FFF100",
     paddingVertical: 15, // Adjusted padding to increase button height
     paddingHorizontal: 50, // Adjusted padding to increase button width
     borderRadius: 40,
@@ -106,16 +123,16 @@ const styles = StyleSheet.create({
   },
   buttonOutline: {
     backgroundColor: "white",
-    borderColor: "#0782F9",
+    borderColor: "#FFF100",
     borderWidth: 2,
   },
   buttonText: {
-    color: "white",
+    color: "black",
     fontWeight: "700",
     fontSize: 16,
   },
   buttonOutlineText: {
-    color: "#0782F9",
+    color: "black",
     fontWeight: "700",
     fontSize: 16,
   },

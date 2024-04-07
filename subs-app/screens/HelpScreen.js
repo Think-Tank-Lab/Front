@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import NavBar from "../components/NavBar"; 
+import NavBar from "../components/NavBar";
 
 const HelpScreen = ({ navigation }) => {
   return (
@@ -76,10 +76,10 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 40,
     marginBottom: 40,
-    backgroundColor: "#0782F9",
+    backgroundColor: "#fff100",
     borderRadius: 40,
     borderWidth: 2,
-    borderColor: "#0782F9",
+    borderColor: "#fff100",
   },
   buttonOutline: {
     backgroundColor: "white",
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#0782F9",
+    color: "black",
   },
   bottomNav: {
     position: "absolute",

@@ -1,19 +1,28 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
-import NavBar from "../components/NavBar";
-import { ref, onValue, set} from "firebase/database";
-import {db} from "../firebase.js";
 import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+} from "react-native";
+import { ref, onValue, set, remove } from "firebase/database";
+import { db } from "../firebase.js";
+import NavBar from "../components/NavBar";
 
 const ExpenseScreen = ({ navigation }) => {
   const [expenses, setExpenses] = useState([]);
+  const [selectedExpense, setSelectedExpense] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    const subscriptionsRef = ref(db, 'subscriptions');
+    const subscriptionsRef = ref(db, "subscriptions");
     onValue(subscriptionsRef, (snapshot) => {
       const data = snapshot.val();
       const subs = [];
       for (let key in data) {
-        subs.push({ id: key,...data[key] });
+        subs.push({ id: key, ...data[key] });
       }
       setExpenses(subs);
     });
@@ -27,39 +36,82 @@ const ExpenseScreen = ({ navigation }) => {
   const currentDay = today.getDate();
 
   const daysLeft = (currentDay, paymentDay, paymentCycle) => {
-  let days;
-  switch (paymentCycle) {
-    case 'Weekly':
-      days = 7 - ((currentDay - paymentDay) % 7);
-      break;
-    case 'Bi-weekly':
-      days = 14 - ((currentDay - paymentDay) % 14);
-      break;
-    case 'Monthly':
-      const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-      if (currentDay < paymentDay) {
-        days = paymentDay - currentDay;
-      } else {
-        days = lastDayOfMonth - currentDay + paymentDay;
-      }
-      break;
-    case 'Every 3 months':
-      const currentMonth = today.getMonth();
-      const monthsUntilNextPayment = (currentMonth + paymentDay - 1) % 3;
-      days = (3 - monthsUntilNextPayment) * 30 - currentDay;
-      break;
-    case 'Every 6 months':
-      days = 180 - currentDay + paymentDay;
-      break;
-    case 'Yearly':
-      days = 365 - currentDay + paymentDay;
-      break;
-    default:
-      days = 30; // Setăm o valoare implicită în cazul în care paymentCycle-ul nu este definit corect
-  }
-  return days;
-};
-  
+    let days;
+    switch (paymentCycle) {
+      case "Weekly":
+        days = 7 - ((currentDay - paymentDay) % 7);
+        break;
+      case "Bi-weekly":
+        days = 14 - ((currentDay - paymentDay) % 14);
+        break;
+      case "Monthly":
+        const lastDayOfMonth = new Date(
+          today.getFullYear(),
+          today.getMonth() + 1,
+          0
+        ).getDate();
+        if (currentDay < paymentDay) {
+          days = paymentDay - currentDay;
+        } else {
+          days = lastDayOfMonth - currentDay + paymentDay;
+        }
+        break;
+      case "3 months":
+        days = 90 - currentDay - paymentDay;
+        break;
+      case "6 months":
+        days = 180 - currentDay - paymentDay;
+        break;
+      case "Yearly":
+        days = 365 - currentDay - paymentDay;
+        break;
+      default:
+        days = 30; // Setăm o valoare implicită în cazul în care paymentCycle-ul nu este definit corect
+    }
+    return days;
+  };
+
+  const openModal = (expense) => {
+    setSelectedExpense(expense);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setSelectedExpense(null);
+    setModalVisible(false);
+  };
+
+  const handleUpdate = () => {
+    const { id, ...updatedExpense } = selectedExpense;
+    const expenseRef = ref(db, `subscriptions/${id}`);
+    set(expenseRef, updatedExpense)
+      .then(() => {
+        console.log("Subscription updated successfully");
+        closeModal();
+      })
+      .catch((error) => {
+        console.error("Error updating subscription: ", error);
+      });
+  };
+
+  const handleDelete = () => {
+    const expenseRef = ref(db, `subscriptions/${selectedExpense.id}`);
+    remove(expenseRef)
+      .then(() => {
+        console.log("Subscription deleted successfully");
+        closeModal();
+      })
+      .catch((error) => {
+        console.error("Error deleting subscription: ", error);
+      });
+  };
+
+  const truncateName = (name, maxLength) => {
+    if (name.length > maxLength) {
+      return name.substring(0, maxLength) + "...    ";
+    }
+    return name;
+  };
 
   return (
     <View style={styles.container}>
@@ -70,26 +122,46 @@ const ExpenseScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.headerSpacer} />
         {expenses.map((expense, index) => (
-          <View key={index} style={styles.expenseItem}>
-            <View style={styles.expenseColumn}>
-              <Text style={styles.expenseTitle}>
-                {expense.name}
-              </Text>
-            </View>
-            <View style={styles.expenseColumn}>
-              <Text style={styles.expenseInfo}>
-                {expense.price}$ / {expense.paymentCycle}
-              </Text>
-            </View>
-            <View style={styles.expenseColumn}>
-            <Text style={styles.expenseInfo}>
-  {daysLeft(currentDay, expense.paymentDay, expense.paymentCycle)} days left
-</Text>
+          <TouchableOpacity key={index} onPress={() => openModal(expense)}>
+            <View style={styles.expenseItem}>
+              <View style={styles.expenseColumn}>
+                <Text style={styles.expenseTitle}>
+                  {truncateName(expense.name, 7)}
+                </Text>
+              </View>
 
+              <View style={styles.expenseColumn}>
+                <Text style={styles.expenseInfo}>
+                  {expense.price}$ / {expense.paymentCycle}
+                </Text>
+              </View>
+              <View style={styles.expenseColumn}>
+                <Text style={styles.expenseInfo}>
+                  {daysLeft(
+                    currentDay,
+                    expense.paymentDay,
+                    expense.paymentCycle
+                  )}{" "}
+                  days left
+                </Text>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
+      <Modal visible={modalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>
+            {selectedExpense && selectedExpense.name}
+          </Text>
+          <TouchableOpacity style={styles.modalButton} onPress={handleDelete}>
+            <Text style={styles.buttonText}>Delete</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
+            <Text style={styles.buttonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
       <View style={styles.bottomNav}>
         <NavBar navigation={navigation} />
       </View>
@@ -154,7 +226,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   expenseColumn: {
-    // flex: 1,
     alignItems: "flex-start",
   },
   expenseTitle: {
@@ -170,6 +241,30 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  modalButton: {
+    backgroundColor: "#fff100",
+    width: "90%",
+    height: 60,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "black",
   },
 });
 
