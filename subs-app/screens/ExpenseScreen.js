@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   modalButton: {
-    backgroundColor: "#fff323",
+    backgroundColor: "#fff100",
     width: "90%",
     height: 60,
     borderRadius: 10,
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "blue",
+    color: "black",
   },
 });
 
